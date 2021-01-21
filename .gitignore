@@ -1,0 +1,10 @@
+# Compiled files
+*.class
+
+# Test execution program
+tj.exe
+!/tj.exe
+
+# Test results - except htm results
+nit*/
+rezultat*.txt
