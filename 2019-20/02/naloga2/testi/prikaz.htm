@@ -1,0 +1,1099 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" 
+          "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <title>Prikaz rezultatov testiranja</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <style>
+            .tableBase { border-collapse: collapse; }
+            .tableBase > tbody > tr > td { border: 1px solid black; padding: 7px;}
+            .tableResults { table-layout: fixed; border-spacing: 0px; border-collapse: separate; }
+            table#nasredini { margin-left:auto; margin-right:auto; }
+            table tbody td.hoverOk {background-color:#9F9; border: 1px solid #63B563; width: 15px; color: black; text-align: center; }
+            .hoverOk:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #63B563; }
+            .hoverOk:hover td { background: transparent; }
+            .hoverOk > a:link, .hoverOk > a:visited, .hoverOk > a:hover, .hoverOk > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverErr {background-color:#FFBF00; border: 1px solid #CB9800; width: 15px; color: black; text-align: center; }
+            .hoverErr:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #CB9800; }
+            .hoverErr:hover td { background: transparent; }
+            .hoverErr > a:link, .hoverErr > a:visited, .hoverErr > a:hover, .hoverErr > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverRuntime {background-color:#FF9; border: 1px solid #D8D87E; width: 15px; color: black; text-align: center; }
+            .hoverRuntime:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #D8D87E; }
+            .hoverRuntime:hover td { background: transparent; }
+            .hoverRuntime > a:link, .hoverRuntime > a:visited, .hoverRuntime > a:hover, .hoverRuntime > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverCompile {background-color:#C00000; border: 1px solid #710B0B; width: 15px; color: black; text-align: center; }
+            .hoverCompile:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #710B0B; }
+            .hoverCompile:hover td { background: transparent; }
+            .hoverCompile > a:link, .hoverCompile > a:visited, .hoverCompile > a:hover, .hoverCompile > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverMissing {background-color:#F0F0F0; border: 1px solid #ABABAB; width: 15px; color: black; text-align: center; }
+            .hoverMissing:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #ABABAB; }
+            .hoverMissing:hover td { background: transparent; }
+            .hoverMissing > a:link, .hoverMissing > a:visited, .hoverMissing > a:hover, .hoverMissing > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverTimeout {background-color:#B9F; border: 1px solid #9070CE; width: 15px; color: black; text-align: center; }
+            .hoverTimeout:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #9070CE; }
+            .hoverTimeout:hover td { background: transparent; }
+            .hoverTimeout > a:link, .hoverTimeout > a:visited, .hoverTimeout > a:hover, .hoverTimeout > a:active { color: black; font-size: 0.9em; }
+            table tbody td.hoverImage {background-color:#D0E0F0; border: 1px solid #a6b3c0; width: 15px; color: black; text-align: center; }
+            .hoverImage:hover { background-color: #FAFAF0; !important; color: #000; border: 1px solid #a6b3c0; }
+            .hoverImage:hover td { background: transparent; }
+            .hoverImage > a:link, .hoverImage > a:visited, .hoverImage > a:hover, .hoverImage > a:active { color: black; font-size: 0.9em; }
+            .tableCommon { border-collapse: collapse; }
+            .tableOK > tbody > tr > td { border: 1px solid #63B563; padding: 7px;}
+            .tableError > tbody > tr > td { border: 1px solid #CB9800; padding: 7px;}
+            .tableRuntime > tbody > tr > td { border: 1px solid #D8D87E; padding: 7px;}
+            .tableCompiler > tbody > tr > td { border: 1px solid #710B0B; padding: 7px;}
+            .tableMissing > tbody > tr > td { border: 1px solid #ABABAB; padding: 7px;}
+            .tableTimeout > tbody > tr > td { border: 1px solid #9070CE; padding: 7px;}
+            .tableImage > tbody > tr > td { border: 1px solid #a6b3c0; padding: 7px;}
+            .tableSummary { table-layout: fixed; }
+            .texttt { font-family: DejaVu Sans Mono, monospace; font-size: 0.8em; }
+            table.diff > tbody > tr > td { border: none; font-family: DejaVu Sans Mono, monospace}
+            .diff_add { color: green; font-family: DejaVu Sans Mono, monospace; }
+            .diff_sub { color: blue; font-family: DejaVu Sans Mono, monospace; }
+            .diff_chg { color: red; font-family: DejaVu Sans Mono, monospace; }
+            a { color: blue; text-decoration: none; height: 100%; width: 100%; vertical-align: middle; }
+            a:link { color: blue; text-decoration: none; }
+            a:link { color: blue; text-decoration: none; }
+            a:hover { color: blue; text-decoration: underline; }
+            body, td { font: normal normal 100%/1.0 DejaVu Sans, sans-serif; }
+            h1 { font-weight: bold; font-size: 150%; }
+            h2 { font-weight: normal; font-size: 125%; border-top: 1px solid black; border-bottom: 1px solid black; background: #DEF; padding: 5px; margin-top: 36px; margin-bottom: 36px}
+            .container{ margin: 0px auto; width: 70%; min-width: 700px; margin-top: 1.8cm; margin-bottom: 1.8cm; }
+            .rwordb{ color: blue; font-weight: bold; }
+            .rwordv{ color:#8000ff; font-weight: bold; }
+            .vcomment{ color: green; }
+            .bcomment{ color: green; }
+            .niz{ color:#a31515; }
+            .stevilo{ color:#ff8000; }
+            tab { padding-left: 4em; }
+            #grad1 {
+                background: -webkit-linear-gradient(left, #E0E0E0 , white);
+                background: -o-linear-gradient(right, #E0E0E0, white);
+                background: -moz-linear-gradient(right, #E0E0E0, white);
+                background: linear-gradient(to right, #E0E0E0 , white);
+            }
+            #grad2 {
+                background: -webkit-linear-gradient(left, #9F9 , white);
+                background: -o-linear-gradient(right, #9F9, white);
+                background: -moz-linear-gradient(right, #9F9, white);
+                background: linear-gradient(to right, #9F9 , white);
+            }
+            .capSlika { display:block; height: 25px; margin:0 auto; font-size: 1.0em; text-align: left; }
+            .dborder { padding: 0px; border: 1px solid #CACACA; }
+            .capText { display: block; margin:0 auto; font-size: 0.9em; text-align: left; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        <a name="top"></a>
+        <h1 id="grad2" style="padding: 10px; border: 0px solid black; color: #000000;">Rezultati preverjanja metod programa (10/10)</h1>
+        <div style="height: 20px"></div>
+        <a name="summary"></a>
+        <h2>Povzetek rezultatov</h2>
+        <table id="nasredini" class="tableBase tableResults">
+            <tbody>
+                <tr>
+                <td class="hoverOk"><a href="#testcase1">1</a></td>
+                <td class="hoverOk"><a href="#testcase2">2</a></td>
+                <td class="hoverOk"><a href="#testcase3">3</a></td>
+                <td class="hoverOk"><a href="#testcase4">4</a></td>
+                <td class="hoverOk"><a href="#testcase5">5</a></td>
+                <td class="hoverOk"><a href="#testcase6">6</a></td>
+                <td class="hoverOk"><a href="#testcase7">7</a></td>
+                <td class="hoverOk"><a href="#testcase8">8</a></td>
+                <td class="hoverOk"><a href="#testcase9">9</a></td>
+                <td class="hoverOk"><a href="#testcase10">10</a></td>
+                </tr>
+                <tr></tr>
+            </tbody>
+        </table>
+        <div style="height: 20px"></div>
+        <h2>Rezultati</h2>
+        <a name="testcase1"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 1</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test01 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka = {<br/>
+<tab><tab><tab>{<span class="niz">'f', 'h', 'a', '-', 'b'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 'i', 'p', 's', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', '-', 't', '-', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'u', 'j', '-', 'c', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'l', 'z', '-', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'l', '-', 'v', 'w', 'k'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', 'p', '-', 'y', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'c', 's', 'r', '-', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', '-', 'k', '-', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'e', 'u', 'j', 'g'</span>},<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka2 = {<br/>
+<tab><tab><tab>{<span class="niz">'f', 'h', 'a', 'b', 'b'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 'i', 'p', 's', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'p', 't', 'c', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'u', 'j', 'k', 'c', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'l', 'z', 'k', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'l', 'r', 'v', 'w', 'k'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', 'p', 'p', 'y', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'c', 's', 'r', 's', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', 'x', 'k', 'l', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'e', 'u', 'j', 'g'</span>},<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka2));<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            8<br/>-1<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase2"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 2</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test02 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka0 = {<br/>
+<tab><tab><tab>{<span class="niz">'l', '-', 'b', 'q', 'w', 'e', 'p', 'o', 'c', 'p', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'l', 'j', 'r', 't', 'e', 'h', 'i', 'e', 'r', 'c', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', 'j', '-', 'p', 't', 'm', 'z', 'g', 'v', 'c', 'i'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 'l', 'x', 'w', '-', 'h', 'r', 'z', 'c', 'j', 'p'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'t', 'a', 'p', 'g', 's', 'i', 'r', 'i', 'd', 'u', 'p'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'j', 'e', 'q', 'p', 'z', 'a', 't', 'y', 'k', 'a', 'p'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'n', 'y', 'b', 'k', 'w', 'q', '-', 'd', 'q', 'z', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', 'h', 'h', 'l', 'm', '-', 'n', 'v', 'b', 'p', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'r', 'd', 'v', 'k', 'b', 'n', 'p', 'k', 'x', 'g', 's'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka0));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka1 = {<br/>
+<tab><tab><tab>{<span class="niz">'u', 'f', 'g', 'w', 'b', 'h', 'r', 'g', 'n', '-', 'w'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'u', 's', 'x', 't', '-', 'z', 'k', 'q', 'a', 'o', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'z', 't', 'a', 'f', 'x', 'w', 'l', 'c', 'h', 't', 'n'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'v', 'n', 'n', 'e', 'w', 'c', 'r', 'h', 'l', 'p'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'c', 's', 'p', 'd', 'o', 'w', 'q', 's', '-', 't', 'q'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', '-', 'h', 'y', 'z', 't', 'v', 'l', '-', 'f', 'p'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 'b', 'y', 'j', 'q', 'e', '-', 'y', 'e', 't', 'd'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'v', 'm', '-', 'w', 'w', 'j', 'k', 'k', 't', 'v', 'm'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'u', 'j', 'k', 'b', 'c', 'z', 'q', 'd', 'o', 'b', 'k'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka1));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka2 = {<br/>
+<tab><tab><tab>{<span class="niz">'y', 's', 's', 'i', 'a', 'g', 'i', '-', 'x', 'b', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', 'j', '-', 'g', 'a', 'e', 'd', 'd', 'z', 'c', 'b'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 'q', 'z', 'u', 'x', 'm', 'm', '-', 'z', 'g', 'c'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'n', 'q', 'o', 'h', 'j', 'z', 'e', 'v', 'q', 'g', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'v', '-', 'u', 'p', 'k', 'd', 'y', 'm', 'c', 'f', 'n'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'l', '-', 'g', 'x', 'o', 'f', 'p', 'h', 'p', 'v'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'h', 'y', 's', 'v', 'q', 'd', 'l', 'r', 'm', 'v', 'q'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'p', 's', 's', 'u', 'x', 'w', 'h', 'a', 's', 'b', 'y'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', 'c', 'n', 'x', 'g', 'a', 's', 'y', 'a', 't', 'd'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka2));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka3 = {<br/>
+<tab><tab><tab>{<span class="niz">'k', 'k', 'h', 'x', 'f', 'g', 'z', 'e', 'p', 'f', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'j', 'g', 'q', 'e', 'y', 'x', 'm', 'g', 's', 'v', 'd'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'s', 's', 'p', 'b', 'i', 'n', 'm', 'j', 'u', 'o', 's'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'u', 'e', '-', 'u', 'z', 'y', 'x', 'v', 'h', '-', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'c', 'p', 'j', 's', 't', 'a', 'j', 'u', 'u', 'n', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', 'y', 'x', 'x', 'l', 'k', 'z', 'p', 'f', 'h', 'q'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 't', 'i', 'i', 'u', 'a', 'x', 's', 'z', 'q', 'p'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'f', 'b', 'q', 'n', 'r', 'y', 'g', 'c', 'o', 'k'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'c', 'd', 'a', 'c', 'n', 'f', 'l', 'q', 'e', 'a', 'j'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka3));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka4 = {<br/>
+<tab><tab><tab>{<span class="niz">'d', 'g', 'm', 'o', 'b', 'g', 'w', 'j', 'k', 'j', 's'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', 'q', 'x', 'n', 'z', 'f', 'j', 'i', 'q', 'j', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'l', 'g', 'f', 'u', 'f', 's', 'r', 't', 'y', 'e', 'q'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', 'z', 'y', 'u', 'j', 'j', 'h', 'n', 'c', 'n', 'u'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'x', 't', 'm', 'y', 'f', 'w', 'e', 's', 'z', 'm', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 'a', 'n', 'a', 'n', 'u', 'f', 'q', 'b', 'o', 'p'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', 'r', 'n', 'w', 'o', 'v', 't', 'y', 'e', 'w', 'd'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'w', 'g', 'd', 'm', 'u', 'h', 'w', 'w', 'i', 'r', 'v'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', 'p', 'v', 'v', 'q', 'x', 'n', 'b', 't', 'e', 'd'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka4));<br/>
+<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            7<br/>7<br/>5<br/>6<br/>-1<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase3"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 3</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test03 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka0 = {<br/>
+<tab><tab><tab>{<span class="niz">'r', 'l', 'p', 'e', '-', '-', 't', 'x', 'y', 'b', 'm', 't', 'v', 'w', 't', 't', 'g'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 'x', 'l', 'd', 'g', 'p', 'i', 'q', 'm', 'o', 's', 'z', 'i', 'e', 'c', 'o', 'm'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka0));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka1 = {<br/>
+<tab><tab><tab>{<span class="niz">'w', 'c', 'q', 'x', 'r', 's', 'm', 'y', 'y', '-', 'r', 'p', 'x', 'd', 'b', 'n', 'h'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'w', 't', 'i', 'h', 'q', 'i', 'l', 'c', 'y', 'l', 'v', 'n', 'f', 'e', 'r', 's', 'w'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka1));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka2 = {<br/>
+<tab><tab><tab>{<span class="niz">'u', 'n', 'y', 'w', 'i', 'h', 'f', 'd', 'v', 'm', 'y', 'u', 'g', 's', 'v', 'c', 'z'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', 'l', 'f', 'x', 'y', 's', '-', 'b', 'w', 'y', 'u', 'w', 'b', 'a', 'c', 'g', 'n'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka2));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka3 = {<br/>
+<tab><tab><tab>{<span class="niz">'m', 'w', 'l', 'a', 'o', 'z', 'y', 'n', 'n', 'j', 'l', 'y', 'k', 'u', 'r', 'h', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', 'b', 'c', 'n', 'u', 'v', 'z', 'i', 'x', 'h', 'd', 'i', 't', 'z', 'e', 't', 'y'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka3));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka4 = {<br/>
+<tab><tab><tab>{<span class="niz">'y', 'c', 'f', 'm', 'v', 'j', 'd', 'c', 'u', 'q', 'z', 'n', '-', 'r', 'e', 'v', 'c'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', 't', 'a', 'x', 'q', 'm', 'k', 'q', 'o', 'c', 'i', 'c', 'l', 'j', 'h', 'm', 'y'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka4));<br/>
+<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            0<br/>0<br/>1<br/>-1<br/>0<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase4"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 4</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test04 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka0 = {<br/>
+<tab><tab><tab>{<span class="niz">'h', 'f', 'e', 'm', 'u', 'a', 'y', 'y', 'h', 'n', 'm', 'b', 'n', 'a', 'l', 'y', 'f', 'i'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'n', 'v', 'h', 'n', 'r', 'l', 'a', 'k', '-', 'l', 'c', 'e', 's', 'b', 'd', 'u', 'n', 'v'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'p', 'm', 'b', 'm', 'x', 's', 'z', 'r', 'x', 'b', 'u', 't', 'k', 'j', 'a', 'o', 'r', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'l', 'a', 'b', 'z', 'y', 'v', 'g', 'w', 'r', 'o', 'i', 'g', 'y', 'r', 'm', 'j', 'v', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'v', 's', 'l', 'i', 't', 'e', 'j', 'h', 'n', 'f', 'x', 'l', 'j', 'v', 'n', 'i', 'm'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'l', 'g', 'x', 'u', 'j', 'f', 'w', 'g', 'a', 'l', 's', 'q', 's', 'l', 'r', 'z', 'm', 'q'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'v', 'h', 'i', 'd', 'n', 'z', 'e', 's', 'h', 'w', '-', 'x', 'v', 't', 'w', '-', 'b', 'm'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'b', 'j', '-', 'q', 'e', 'a', 'b', 'u', '-', 'q', 'p', 'q', 'p', 'q', '-', 'i', 'a', 'f'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'h', 'b', 'a', 'u', 'x', 'x', 'l', 'i', 'z', 'r', 'y', 's', 'q', 'y', 'y', 'g', 'z', 'h'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'d', 'c', 'm', 'k', 'w', 'y', 'h', 'e', 'v', 'v', 'v', 'j', 'n', 'p', 'p', 'g', 'c', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'t', 'r', 'v', 'v', 'j', 'j', 'z', 'o', 'h', 'v', 'h', 't', 'k', 'r', 'z', 'o', 'b', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'y', 'p', 's', 'n', 'k', 'b', 'z', 'm', 'o', 'z', 'z', 's', 'a', 'y', 'j', 'i', 'q'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'b', 'h', 'o', 'b', 'q', 'n', 'm', 'b', 'v', 'v', 'e', 'o', 'y', 'e', 'm', 'y', 'g', 'n'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'n', 'l', 'o', 'm', 'u', 'n', 'g', 'e', 'e', 'o', 'x', 'g', 'e', 'q', 'q', 'j', 'i', 'm'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka0));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka1 = {<br/>
+<tab><tab><tab>{<span class="niz">'n', 'k', 'y', 'a', 'k', 'k', 'x', 'p', 'x', 'c', 'r', 'e', 'h', 'w', 'b', 'n', 'n', 'b'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'e', 'c', 'r', 'g', 'e', 'u', 'n', 'l', 'i', 'e', 'w', 'i', 'a', 'a', '-', 'f', 's'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'s', 's', '-', 'r', 'w', 'j', 'o', 'u', 'j', 'u', 'd', 'd', 'f', 'h', 'x', 'b', 'k', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', 'x', 'a', 'f', 'm', 'k', 's', 'l', 'o', 'd', 'l', 'i', 'u', 'm', 't', 's', 'n', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'l', 'w', 'd', 'b', 'k', 'r', 'n', 'y', 'g', 's', 'w', 'o', 'm', 'b', 's', 'o', 'q', 'u'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', 'o', 'n', 'a', 'b', 'l', 'p', 'm', 'b', 'y', 's', 'b', 'u', 'j', 'f', 'q', 'r', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', 'g', 'x', 'w', 'p', 'e', 'a', 'i', 'v', 'h', 'v', 'u', 'f', 's', 'c', 'j', 'r', 'z'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'h', 'z', '-', 'j', 'z', 'p', 'v', 'n', 's', 'h', 'f', 's', 'n', 'z', 'g', 'e', 'b'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'j', 'a', 'c', 'i', 'e', 'v', 'g', 'o', 'h', 'k', 'e', 'u', 'q', 'i', 'o', '-', 'k', 'q'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'e', 'f', 'd', 'k', 'm', 'c', '-', 'h', 'k', 't', 'b', 'd', 'v', 'i', '-', 'h', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'w', 'r', 'e', 'u', 't', 'w', 'j', 'i', 'f', 'u', 'h', 'e', 'z', 'q', '-', 'k', 'm'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'p', 's', 's', 'f', 'j', 'h', 'e', 'k', 'x', 'x', 'x', 'f', 'c', 'y', 'o', 'x', 'j', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'x', 'm', 'u', 'k', 'l', 'c', 'g', 'o', 'o', 'w', 'j', 'c', 'h', 'c', 'm', 'u', 'u', 'x'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'm', 'd', 'b', 'u', 'q', 'z', 'd', 'w', 'a', 'h', 'e', 'o', 'b', 'w', 'i', 'm', 'f'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka1));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka2 = {<br/>
+<tab><tab><tab>{<span class="niz">'a', 'g', 'k', 'k', 'x', 'x', 'y', 'x', 'a', 'f', 'k', 'q', '-', 'c', 'j', 'h', 'r', 'g'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'u', 'p', 'p', 'v', 'h', 'l', 'm', 'h', 'j', 'k', 'd', 'u', 'j', 'y', 's', 'u', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'t', 'y', 'q', 'g', 's', 'q', 'f', 'r', 'm', 's', 'p', 'z', 'b', 's', '-', 'f', 'n', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'u', 'x', 'e', 'y', 't', 'c', 'c', 'q', 'k', 'i', 'f', 'n', 'j', 'k', 'l', 'm', 'h', 'k'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'c', 'd', 'j', 'd', 'd', 'm', 'q', 'u', 'v', 'r', 'r', 'x', 'b', '-', 'o', 'u', 'm', 'p'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'n', 'h', 'c', 'z', 'z', 'c', 'f', 't', 'f', 't', 'o', 'c', 'x', 'd', 'o', 'd', 'd', 'x'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'b', 's', 'd', 'l', 'g', 'j', 't', 'u', 'g', 'k', 'q', 'x', 'n', 'v', '-', 'r', 'y', 'x'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', 'r', 'x', 'x', 'h', 'g', 'm', 'h', 'u', 'n', 'f', 'x', 'e', 'w', 'j', 'r', 'j', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'i', 'z', 'c', 'e', 'm', 'd', 'e', 'f', 'w', 'z', 'y', 's', 'b', 'c', 'u', 'v', 'x', 'y'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 'c', 'u', 'v', 'n', 'x', '-', 'b', 'r', 'j', 'n', 'b', 'l', 'v', 'h', 'd', 's', 'z'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'d', 'k', 'x', 'a', 'd', 'h', 'v', 'o', 'w', 'f', 'r', 'k', 'h', 'b', 'u', 's', 's', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'd', 'b', 'd', 'b', 'm', 'u', 'g', 'n', 'g', 'n', 'k', '-', 'g', 'v', 'k', 'j', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', 'p', 'w', 'u', 'q', 'j', 'n', 'j', 'w', 'w', 'y', 'o', 's', 'n', 'q', 'l', 'o', 'b'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 'j', 'j', 'x', 'r', 'h', 'y', 'b', 't', 'o', 'd', 'a', 'h', 'w', 'e', 'a', 'f', 'h'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka2));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka3 = {<br/>
+<tab><tab><tab>{<span class="niz">'q', 'u', 'v', 'p', 'a', 'v', 's', 't', 'g', 't', 'e', 'o', 'm', 'h', 'f', 'j', 'q', 'u'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'t', 'd', 'n', 'w', 'o', 'm', 'v', 'h', 'r', 'v', 'f', 'x', 'd', 'f', 'v', 'l', 'u', 'u'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', 'b', 'c', 'n', 'u', 't', 'o', 'h', 'c', 'b', 'w', 'v', 'f', 's', '-', 'a', 'h', 'j'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'s', 'n', 'o', 'a', 'c', 'r', 'f', 'a', 'x', 'k', 'k', 'k', 'v', 'r', 'y', 'c', 'v', 'k'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'v', 'm', 'o', 'o', 'g', 'a', 'i', 'l', 'v', 'e', '-', 'i', 'p', 'x', 's', 'v', 'i', 'b'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', 'u', 'n', 't', 'v', 'u', 'w', 'q', 'h', 't', 'm', 't', 'l', 'o', 'h', 't', 'q', 'p'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'w', 'c', 'j', 'v', 't', 'h', 'h', 'y', 'c', 't', 'd', 'm', 'p', 'e', 't', 'k', 'i', 'c'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'z', '-', 'x', 'j', 'w', 'c', 'q', 'r', 'z', 'k', 'e', 'g', 'a', 'i', 'm', 'k', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'d', 'q', 'k', 'm', 'o', 'u', '-', 'v', 'f', 'g', 'o', 'x', 'b', 'k', 'i', 'q', 'y', 'u'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 't', 'e', 'j', 's', 'e', 't', 'y', 'h', 'n', 'f', 'u', 't', 'j', 't', 'p', 'x', 'w'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'w', 'k', 'a', 't', 'k', '-', 'x', 'k', 'x', 'p', 'u', 'w', 'r', 'm', 'h', '-', 'r', 'h'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', 'h', 'm', 'n', 'g', 'd', 'd', 'e', 'i', 'b', 'd', 'u', 'm', 'o', 'w', 'k', 'b', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'i', 'w', 'c', 'f', 'r', 'g', 'b', 'q', 'h', 'i', 'w', 'r', 'l', 'm', 'u', 'y', 'h', 'x'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'j', 'w', 'x', 'r', 'i', 'k', 'g', 's', 'v', 'v', 'z', 'u', 'f', 'k', 'n', 'j', 'i', 's'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka3));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka4 = {<br/>
+<tab><tab><tab>{<span class="niz">'m', 'x', 'b', 'a', 'x', 'c', 'y', 'z', 'g', 'w', 'x', 'h', 'j', 'x', 'z', 'k', 'd', 'c'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 's', 'x', 'x', 'b', 'y', 'q', 'h', 'k', 'g', 'w', 'h', 't', 'm', 'm', 'i', 'z', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'x', 'v', '-', 'c', 'j', 'x', 'k', 'o', 'x', 'o', 'x', 'y', 'n', 'g', 'a', 'z', 's'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'w', 'b', 'd', 'u', 's', 'y', 'a', 'y', 'y', 'a', 'c', 'n', 'l', 'd', 'm', '-', 'h', 'm'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', 'm', 'j', 'n', 'n', 'n', 'e', 'k', 'z', 'y', 'z', 'j', 'r', 'y', 'd', 'k', 'h', 's'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'v', 'c', 'n', 'h', 'x', 'j', 'e', 'q', 'y', 's', 'i', 'v', 'e', 'z', 't', 'u', 'a', 'm'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'b', 'b', 'x', 'q', 'z', 'e', 'k', 'a', 'q', 'b', 'b', 'e', 'h', 'l', 'g', 'q', 'c', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'t', 'w', 'f', 'n', 'n', 'b', 'd', 'r', 'v', 'm', 'u', 'l', 'a', 'r', 'k', 'v', 'u', 'd'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 't', 'u', 'x', 'h', 'j', 'p', 'h', 't', 'j', 'a', 'l', 'k', 'h', 'w', 'q', 'm', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'s', 'v', 'x', 'c', 'x', 's', 'r', 'x', 'n', 'l', 'm', 'o', 'e', 'u', 'v', 'l', 'm', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 'a', 'o', 'x', 'c', 'w', 's', 'f', 'u', 'f', 'y', 'j', 'f', 'z', 'w', 'r', 'j', 'w'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'c', 'y', 'z', 'j', 'g', 'd', 'a', 'u', 'v', 'k', 'l', 'b', 's', 'e', 'l', 'w', 'u', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 't', 'j', 'g', 'p', 'd', 'b', 'y', 'b', 'q', 'r', 't', 'y', 'x', 'e', 'c', 'g', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 'n', 'w', 'v', 'p', 'b', 'u', 'x', 'y', 'z', 'w', 'i', 'j', 'y', 'l', 'x', 'r', 'q'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka4));<br/>
+<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            7<br/>10<br/>11<br/>10<br/>3<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase5"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 5</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test05 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka0 = {<br/>
+<tab><tab><tab>{<span class="niz">'s', 'v', 'e', '-', 'd', 'n', 'z', 'd', 'z', 'm', 'k', 'h', 'j', '-', 'x', 'x', 'y', 'o', 'k'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'e', 'q', 'j', 'c', 'w', 'o', 's', 'u', 'a', 'z', 'g', 'p', 't', 'g', 'g', 'k', 'n', 'w'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', 's', 's', 'm', 'l', 'v', 'l', 'p', 'k', 'h', 'n', 'm', 'e', 'o', 'j', 'm', 'k', 'e', 'j'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 'u', 'q', 'y', 'd', 'v', 'y', 'l', 'f', 't', 'k', 'x', 'w', 'q', 'c', 'h', 'i', 'h', 'z'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', 'n', '-', 'z', 'h', 'x', 'g', 'h', 'd', 'g', 'w', 'i', 'i', 's', 'f', 'b', 'a', 'y', 'f'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'d', 'r', 'o', 'r', 'a', 'd', 'o', 'y', 'u', 'q', 'i', 'p', 'k', 's', 'y', 'j', 'b', 'w', 'd'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 'b', 'k', 'b', 'n', 'e', 'l', 'x', 'w', 'l', 's', 'w', 'b', 'i', 's', 'w', 'p', 'n', 'm'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'c', 'o', 'o', 'n', 'e', 'f', 'l', 's', 'q', 'v', 'z', 'l', 'r', 'n', 'y', 'm', 'g', 'z'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 'd', 'l', 'v', 'r', 'x', 'r', 'y', 'e', 'c', 'v', 'c', 'e', 'z', 'b', 'n', 'y', 'r', 'd'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'w', 'v', 'r', 'u', 'f', '-', 'k', 's', 'n', 'p', 'r', '-', 'k', 'd', 'u', 'j', 'w', 'l', 'j'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'w', 'a', 'p', 'o', 'q', 'i', 'b', 'p', 'u', 'd', 'b', 'h', 'w', 'z', 'h', 'm', 'v', 'k', 'z'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'c', 'b', 'i', 'f', 'q', 'c', 'u', 'z', 'v', 'o', 'p', 'y', 'i', 'y', 'x', 'm', 'q', 'd', 'h'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'j', 'a', 'r', 's', 'a', 'a', 'v', 'k', 'z', 'i', 'b', 'q', 'k', 'd', 'b', 's', 'a', 'v', 'c'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'d', 'q', 's', 'y', 't', 'h', 'l', 'm', 'q', 'p', 'm', 't', 'n', 'w', 'r', 'c', 'p', 'v', 'k'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 'i', 'c', 'e', 'c', 'h', 'w', 's', '-', 'e', 't', 'l', 'j', 'l', 'a', 'b', 'r', 'g', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'z', 'j', 'l', 'b', 'y', 'y', 'n', 'b', 'z', 'a', 'p', 'k', 'y', 'v', 'h', 'm', 'v', 'g', 'm'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'n', 'z', 'g', 'p', 'u', 'm', 'j', 'h', 'h', 'y', 'n', 'w', 's', 'i', 'r', 't', 'm', '-', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'h', 'x', 'm', 'w', 't', 'm', 'v', 'e', 'y', 'm', 'w', 'n', 'n', 't', 'v', 'g', 'd', 'j', 'u'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'i', 'q', 'l', 'z', 'x', 'c', 'a', 'd', 'q', 'f', 'j', 'p', 'z', 'd', 'e', 'u', 'b', 's', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'i', 'h', 'r', 'w', 'i', 'l', 't', 'k', 'q', 'q', 'r', 'f', 'q', 'j', 'z', 'm', 'o', 's', 'k'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka0));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka1 = {<br/>
+<tab><tab><tab>{<span class="niz">'c', 'o', 't', 'l', 'a', 'l', 'd', 'l', 'z', 'g', '-', 'k', 'i', 'w', 'q', 'h', 'z', 'x', 'd'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'p', 'g', 'n', 'a', 's', 'c', 'u', 'h', 'j', 'r', '-', 'd', 'r', 'o', 'r', 'd', 'm', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'c', 'c', 'h', 'h', 'v', 'r', 'k', 'p', 'p', 'n', 'n', 'n', 'c', 'd', 'y', 'h', 'p', 'y', 'y'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', 'n', 'o', 'o', 'u', 'z', 'e', 'd', 't', 'k', 'l', 'a', 'z', 'p', 'z', 'r', '-', 'x', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', 'v', 'd', 'y', 'd', 'u', 'w', 'r', 'o', 'j', 'i', 'v', 't', 'x', 'w', 't', 'w', 'c', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'n', 'k', 'u', 'm', 'v', 'z', 'i', 'e', 'r', 'w', 's', 'i', 'r', 'k', 'x', 'y', 'l', 'f', 'z'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'p', 'm', 'p', 'l', 'f', 'l', 'y', '-', 'z', 'w', 's', 'n', 'o', 'e', 'y', 'h', 'c', 'y'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'i', 'f', '-', 'v', 'k', 'b', 'b', 'g', 'm', 'b', 'x', 's', 'i', 'f', 'w', 's', 'i', 'h', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', 'k', 'u', 'b', 'x', 'w', 'w', 'i', 'v', 'c', 'k', 'i', 'z', 'p', 'm', 't', 'p', 'a', 'q'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'c', 'y', 'u', 'u', 'm', 'r', 'z', 'l', 'i', 'f', 'u', 'c', 'p', 'm', 'z', 'b', 'k', 'f', 'n'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'s', 'z', 'j', '-', 'p', 't', 'r', 'w', 'e', '-', 'o', 's', 't', 'd', 'n', '-', 'o', 'd', 'v'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 'r', 'l', 'v', 'g', 'i', 'u', 'w', 'g', 'd', 'i', 'x', 's', 'u', 'f', 'u', 'm', 'w', 'v'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', 'p', '-', 'o', 'h', 'e', 'b', 'p', 'n', 'a', 'c', 'x', 'q', 'u', 't', 'x', 'b', 'c', 'j'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'w', '-', 'h', 't', 'p', 'p', 'y', 'f', 'z', 's', 'b', 'w', 'g', '-', 'b', 'v', 'w', 'k', 'z'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 'p', 'u', 'z', '-', 'r', 'g', 'h', 'w', 'i', 'w', 'h', 'c', 'l', 's', 'd', 'e', 'c', 'n'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'h', 'z', 'm', 'l', 'g', 'a', 'n', '-', '-', 't', 'r', 'w', 'g', 'c', 'e', 'u', 'w', '-', 'z'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', 'j', 'j', 'k', 'k', 'm', 'o', '-', 'j', 'u', 'c', 'b', 'n', 'v', 'l', 'w', '-', 'c', 'v'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'h', 'u', 'f', 'r', 'i', 'j', 'l', 'b', 'q', 'd', 'j', 'y', 'y', 'v', 's', 'w', 'w', 'c'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 'l', 'c', 'j', 'q', 'i', 'n', 'p', 'q', 'i', 'r', 'i', 'j', 'b', 'j', 'l', 'r', 'r', 'f'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'w', 'z', 'b', 'v', 'm', 'v', 'u', 'n', 'g', 'i', 'v', 'r', 's', 'd', 'y', 'm', 'p', 'b'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka1));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka2 = {<br/>
+<tab><tab><tab>{<span class="niz">'r', 'a', 'q', 's', 'z', 'i', 'o', 'c', 'c', 'b', 'b', 'd', 'v', 'b', 'z', 'q', 'p', 'y', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'d', 'e', 'x', 'n', 'y', 'v', 'r', 'o', 'v', 'x', 'i', 'w', 'q', 'q', 'w', 't', 'z', 'h', 'i'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'h', 'c', 'p', 'e', 'q', 'r', 'w', 'p', 's', 'l', 'm', 'd', 's', 'n', 'p', 'a', 'l', 'p'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'s', 'k', 'r', 's', 't', '-', '-', 'r', 'h', 'o', 's', 'l', 'c', 'a', 'z', 'm', '-', 'l', 'q'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'t', 'a', 'o', 'b', 'b', 'd', 'l', 'r', 'm', 'd', 'a', 'x', 't', 'e', 'i', 'o', 'w', 'f', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'x', 't', 'n', 'u', 'z', 'm', 'y', 'j', 'd', 'o', 'r', 't', 'a', 'k', 'a', 'y', 'm', 'h', 'z'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'j', 'p', 'v', 'g', 'p', 'r', 'l', 'z', 'b', 'n', 'c', 't', 'z', 'p', 'p', 'r', 'd', 'k', 'w'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', '-', 'a', 'w', 'h', 'f', 't', 'p', 'v', 'l', 'k', 'a', 'y', 'z', '-', 'z', 'y', 'f', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 'p', 'i', 'z', 'a', 'l', 'f', 'l', 't', 'k', 's', 'j', 'n', 'g', 'k', 'r', 's', 'v', 'q'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'t', 'g', 'm', 'x', 'f', 'f', 'p', 'p', 't', 'r', 't', 'w', 'i', '-', 'n', 'i', 'r', 'e', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'p', 'v', 'c', 'd', 'u', 'q', 'f', 'q', 'o', 'b', 'h', 'p', 'a', 'i', 'p', 'a', 'm', 'c', 'i'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'l', 'a', 't', 'l', 'l', 'e', 'm', '-', 'v', 'w', 'y', 'e', 'q', 'g', 'l', 'e', 'h', 'h', 'd'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'p', 'n', 'z', 'x', 'r', 'z', 'u', 'n', 'q', 'u', 'j', 'f', 't', 'w', 'w', 'c', 'h', 'n', 'g'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'s', 'h', 'o', 'h', 'o', 't', 'h', 'w', 'l', 'x', 'e', 'x', 'u', 'n', 'c', 'e', 'd', 'b', 'f'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'i', 'l', 'd', 'c', 'c', 'v', 'i', 'a', 's', 'n', 'f', 'z', 'w', 'j', 'n', 'd', 'm', 'y', 'n'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'r', 't', 'w', 'z', 'u', 'j', 'b', 'r', 'h', 'd', 'z', 'i', 's', 'e', 'l', 't', 'a', 'y', 'u'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', 'm', 'u', 'o', 'l', 'j', 'h', 'h', 'x', 'y', 'l', 'm', 'o', 'f', 'u', 'o', 's', 'e', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 'f', 'y', 'c', 'f', 'i', 'w', 'y', 'v', 'r', 'v', 'k', 'm', 'e', 'g', 's', 's', 'x', 'h'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'n', 't', 'o', 't', 'g', 'g', 'm', 'b', 'y', 'o', 'c', 'p', 'a', 'p', 'r', 'g', 'k', 'p'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'j', 'z', 'k', 'z', 'g', 'j', 'm', 'k', 'g', 'r', 'u', 'p', 't', 'k', 'f', 'd', 'o', 'v', 'n'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka2));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka3 = {<br/>
+<tab><tab><tab>{<span class="niz">'t', 'y', 'r', 's', 'n', 'x', 't', 'q', 'm', 'u', 'p', 's', 'd', 'x', 'k', 'n', 'w', 'j', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'j', 'b', 'h', 'b', 'v', 't', 't', 'd', 'd', 'q', 'l', 'u', 'a', 't', 'a', 'g', 'v', 'l', 'v'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'l', 'g', 'x', 'y', 't', 'm', 'j', 'w', 'k', 'y', 'f', '-', 'y', 'w', 'f', 'q', 'x', 'b', 'f'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'i', 'o', 'y', 'p', 'w', 's', 'c', 'i', 'f', 'v', 'y', 'n', 'q', 'o', '-', 'k', 'r', 'j', 'y'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'t', 'y', 'b', 'j', '-', 'q', 'f', 'u', 'o', 'k', 't', 'i', 'm', 'd', 'd', 'b', 'u', 'm', 'm'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'b', 'm', 'k', 'z', 'x', 'o', 'v', 'c', 'a', '-', 'x', 'l', 'f', 'm', '-', 'p', 'k', 'u', 'm'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'x', 'y', 'h', 'z', 'a', '-', 'a', 'f', 'e', 'n', 'i', 's', '-', 'y', 'l', 'i', 'j', 'x', 'x'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', 'a', 'i', 'm', 'o', 'k', 'q', 'r', 'p', 'i', 'v', 'j', '-', 'g', 'i', 'w', 'q', 'l', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', 'j', 'c', 'u', 'w', 'v', 'l', 'z', 't', 'g', 'o', 'h', 't', 'y', 'q', 'o', 'n', 'i', 'd'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'r', 'y', 'b', 'k', 'x', 'z', 'b', 'd', 'p', 'j', 'p', 'j', '-', 'o', 'j', 'z', 'a', 'f', 'g'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'j', 'd', 'k', 'l', 'v', 'j', 'k', 'e', 't', 'o', 'm', 'o', 'l', 'd', 'u', 'n', 'h', 'n', 'w'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', 'o', 'a', 'g', 'v', 'l', 'd', 'j', 'z', 'l', '-', 'o', 'c', 'd', 'k', 'h', 'g', 'x', 'd'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'b', 'l', 'g', 'c', 'l', 'n', 's', 'h', 'c', 'e', 'v', 'a', 'q', 'x', 'f', 'm', 'x', 'y', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'x', 'g', 'm', 'f', 'r', 'z', 'h', 'l', 'g', 'x', 'g', 'r', 'r', 'u', 'r', 's', 'j', 'x', 'j'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'l', 'r', 'u', 'c', 'b', 'l', 'c', 'g', 't', 'x', 'd', 't', 't', 'p', 'l', 'd', 'l', 'z'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', 's', 'q', 'g', 'r', 'w', 'u', 'a', 'w', 's', 'l', 'f', 'q', 'y', 'd', 'q', 't', 'l', 'n'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'j', 'g', 'f', 'z', 'c', 'v', 'w', 'z', 'm', 'p', 'n', 'h', 'l', 's', 'n', 'x', 'v', 'd'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'j', 't', 'j', 't', 'a', 't', 'n', 'v', 'n', 'm', 'u', 'e', 'f', 't', 'h', 'b', 'c', 'd', 'w'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'v', 'a', 'l', 'l', 'p', 'd', 'u', 'd', 'b', 'q', 'n', 'p', 'o', 'f', 'y', 'f', 'w', 'q', 'j'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 'h', 'z', 'g', 'e', 'o', 'q', 't', 'k', 'p', 'm', 'j', 'd', 'd', 'v', 'f', 'a', 'i', 'g'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka3));<br/>
+<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka4 = {<br/>
+<tab><tab><tab>{<span class="niz">'z', 'a', 'a', 'z', 'm', 'v', 'q', 't', 'u', 'x', 'k', '-', 'n', 'y', 'g', 'p', 'r', 'w', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'n', 'h', 'c', 'd', 'g', 'a', 'x', 'q', 'f', '-', 'u', 'k', 'n', 'j', 'g', 'z', 'n', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'r', 'z', 'b', 'j', 'q', 'i', '-', 'j', 'm', 'b', 'k', 'c', 'n', 'x', 'd', 'a', 'y', 'd', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'j', 'f', 'u', '-', 'a', 'q', 'n', 'k', 'y', 'a', 'b', 'h', 'u', 'e', 'd', 'm', 'h', 'f', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', 'l', 'h', 'p', 'e', 'q', '-', 's', 'f', 'r', 'h', 'u', 'w', 'r', 'i', 'x', 'f', 's', 's'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'z', 'r', 's', 'm', 'z', 'p', '-', 'f', 'g', 'q', 'c', 'i', 'g', 's', 'm', 'q', 'f', 'j', 'v'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'r', 'r', 'i', 'm', 'm', 't', 'u', 'o', 'x', 'd', 'o', 'q', 'k', 'z', 'r', 'c', 'i', 'h', 'q'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'s', 'v', 'e', 'q', 'p', 'm', 'u', 'k', 'u', 'i', 't', 'f', 'r', 'p', 'w', 'j', 'h', 'j', 'k'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 'i', 'r', 'l', 'x', 'j', 'x', 'q', 'n', 'c', 's', 'u', 'h', 'e', 'b', 'o', 'c', 'y', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'i', 'y', 't', 'c', 'a', 's', 'w', 'j', 'k', 'o', 'x', 'm', 'o', 'x', 'l', 'w', 'l', 'r', 'i'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'n', 'b', 'y', 'x', 'v', 'd', 'g', 'q', 'd', 'n', 'e', 'z', 'i', 'u', 'l', 'c', 'i', 'g', 'y'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'x', 'p', 'w', 'n', 'v', 'm', 's', 'j', 'j', 's', 'v', 'j', 'j', 'k', 'n', 'e', 'z', 'n', 'h'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'w', 'u', 'v', 'h', 't', 'c', 'x', 'u', 's', 'r', 'e', 'z', 'x', 'p', 'p', 't', 'a', 'n', 'k'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 'v', 't', 'z', 'f', 'u', 'm', 'b', 'n', 'u', 'f', 's', 'i', 'c', 'a', 'i', 't', 'q', 'i'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'b', 'w', 'r', 'g', 'g', 'r', 'u', 'p', 'y', 'm', 'g', 'x', 'o', 'o', 'v', 'y', 'm', 'z', 'u'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'h', 'u', 'd', 'a', 'y', 'w', 'r', 'h', 'c', 'i', 'q', 'z', 'l', 'k', 'q', 'k', 'e', 'o', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'p', 'h', 'n', 'b', 'c', 'o', 'y', 't', 'a', 'b', 'm', 'y', 'u', 'z', 'z', 't', 'v', 'x', 'n'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'b', 'm', 'y', 'm', 'h', 'd', 'm', 'd', 'p', 'p', 'a', 'i', 'j', 'e', 'a', 'q', 'j', 'g', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'x', 's', 's', 'j', 'y', 'j', 'o', 'x', 'o', 'v', 'z', 'x', 'f', 'd', 'z', 'h', 'y', 'q', 'c'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', 'd', 'a', 'v', 'a', 'p', 'a', 't', 'a', 'q', 'k', 'i', 'f', 'f', 'x', 't', 't', 'd', 'h'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>System.out.println(Druga.zadnjaVrsticaZLocilom(krizanka4));<br/>
+<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            16<br/>16<br/>11<br/>11<br/>5<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase6"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 6</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.Arrays;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test06 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka = {<br/>
+<tab><tab><tab>{<span class="niz">'f', 'h', 'a', '-', 'b'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 'i', 'p', 's', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', '-', 't', '-', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'u', 'j', '-', 'c', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'l', 'z', '-', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'l', '-', 'v', 'w', 'k'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', 'p', '-', 'y', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'c', 's', 'r', '-', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', '-', 'k', '-', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'e', 'u', 'j', 'g'</span>},<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">0</span>, <span class="stevilo">1</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">1</span>, <span class="stevilo">1</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">2</span>, <span class="stevilo">1</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">3</span>, <span class="stevilo">1</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">4</span>, <span class="stevilo">1</span>);<br/>
+<tab>}<br/>
+<br/>
+<tab><span class="rwordv">private</span> <span class="rwordv">static</span> <span class="rwordv">void</span> izpisi(<span class="rwordv">char</span>[][] krizanka, <span class="rwordv">int</span> stolpec, <span class="rwordv">int</span> k) {<br/>
+<tab><tab><span class="rwordv">char</span>[] beseda = Druga.ktaBeseda(krizanka, stolpec, k);<br/>
+<tab><tab><span class="rwordb">if</span> (beseda == null) {<br/>
+<tab><tab><tab>System.out.println(<span class="niz">"null"</span>);<br/>
+<tab><tab>} <span class="rwordb">else</span> {<br/>
+<tab><tab><tab>System.out.println(Arrays.toString(beseda));<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [f,&nbsp;a,&nbsp;y,&nbsp;u,&nbsp;k,&nbsp;l,&nbsp;g,&nbsp;c,&nbsp;e,&nbsp;y]<br/>[h,&nbsp;i]<br/>[a,&nbsp;p,&nbsp;t]<br/>[]<br/>[b,&nbsp;o,&nbsp;l]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase7"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 7</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.Arrays;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test07 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka = {<br/>
+<tab><tab><tab>{<span class="niz">'w', 'b', 'f', 't', 'd', 'l', 'e', 'r', 'x', 'o', 'a', 'p', 'd', 'x', 'q'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'h', 'e', 'i', 'y', 'e', 'b', 'u', '-', 'h', 'g', 'n', '-', '-', 'g', 's'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'v', 'p', 'k', 'v', 'u', 's', 'k', 'w', 'm', 'w', 'x', 'w', 'b', 'o', 'j'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'r', 'm', 'j', 'z', 'f', 'd', '-', 'a', 'b', 'r', 'c', 'v', 'c', 't', 'f'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', '-', 'h', 'f', 'o', 'a', 'o', 'e', 'e', 'm', 'e', 'u', 'c', 'n', 'h'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 'a', 'x', '-', 'i', 'c', 'z', '-', 'c', '-', 'y', 'm', 'h', '-', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 'h', '-', 'o', '-', 'x', 's', 'e', 'j', 'u', 'w', '-', 'v', 'p', 'i'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', 'v', 'z', 'v', '-', 'w', 'z', 'n', 'm', 'j', 'g', 'n', 'f', 'q', 'm'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'s', 'l', 'g', 'n', 'k', '-', 'n', 'b', 't', 'h', 'k', 'v', 'o', 'y', 'g'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'u', '-', 's', '-', '-', 'o', 'b', 'r', 'l', 'z', 'u', '-', 'h', 'l', 'h'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'i', 'b', '-', 'p', 'y', 'a', 'b', 'l', 'n', 'g', 'n', 'j', 'w', 'l', 'n'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', 't', 't', 'm', 'c', 'n', 'c', 'o', 'm', 'g', 'n', 's', 'q', 'n', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 'y', 'x', 'y', 'y', '-', 'e', 'v', 'z', 'o', 'z', 'k', 'a', 'o', 'i'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', '-', 'u', 'j', 'b', '-', 'e', '-', 'v', 'j', 'o', '-', 'c', 'l', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 'v', 'h', '-', 'e', 'q', 't', '-', 'm', 'g', 'n', 'v', 'j', 's', 'y'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', 'n', 'p', 't', 'r', 's', 'f', 'e', 'e', 'v', '-', 'g', 's', 't', 'i'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'x', 'o', '-', 'v', 'q', 'a', '-', 'i', 'i', '-', 'q', 'l', 'u', '-', 'v'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'x', 's', 'u', '-', 'a', 'g', 'y', '-', '-', 'f', 'b', 'k', 'y', 'j', 'd'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'n', 'z', '-', 'b', 'd', 'a', 's', 'h', '-', 'y', 'u', '-', '-', 'l', 'x'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'r', 'g', '-', 'x', '-', 'd', '-', 'c', 'i', 'b', 'c', 'o', 'd', 'u'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'v', '-', 'q', 'a', 'l', 'x', 'o', 'b', 'u', 'i', 'c', 'n', '-', 'r', 'm'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', '-', 'v', 'i', '-', 'w', 't', 'x', 'j', 'd', 'n', 'w', 'c', 'v', 'j'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'i', 'a', 'n', 'x', 'l', 'v', 'q', 'b', '-', 'x', 'e', '-', 'g', 'v'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'r', '-', 'q', 'y', 'm', 'x', '-', 'e', 'o', 'c', 'r', 'j', 'e', 'i', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'b', 'm', 'z', 'a', 'g', 'l', 'n', '-', 'f', '-', 'k', 'l', 's', 'b'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'i', 'z', 'r', 'h', 'b', 'h', 'a', 'p', 'o', '-', 'r', 'x', '-', 'o', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'j', 'm', 't', 'c', 'k', 'p', 'k', '-', 'z', 'x', 'e', 'v', '-', 'n'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'u', 'j', 'h', '-', 'q', '-', 'e', '-', '-', '-', 'v', '-', 'c', '-', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'d', 'u', 'p', 'j', '-', 's', 'e', 'l', 'e', '-', 'i', 'b', 'g', 'o', 's'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 'z', 'f', 'v', '-', 'k', 't', 'e', 'b', '-', 'n', 'f', 'z', 's', 'j'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'d', 's', 'f', '-', 'y', 'z', 'y', 's', '-', '-', 'j', 'p', 'c', '-', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'j', 'h', 'u', 'j', 'e', 'd', 'r', 'o', 'c', 'b', 'a', 'p', 'o', 'z'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'n', 'j', '-', 'b', 'm', 'a', 'x', '-', 'r', '-', 's', 'v', 'k', '-', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'r', 'q', '-', '-', 'z', 's', 'w', 'd', 'f', 'i', 'g', 'e', 'h', 't', 'd'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'u', 'x', 'u', 'n', 'b', 'o', 'a', 'i', 'n', 'd', 'u', 'z', 'v', 'b', 'g'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', '-', '-', 'e', 'w', 'p', 'k', 'l', '-', 'g', 'g', 'k', 's', 'u', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', 'b', 'w', 't', '-', 'y', 'b', 'f', 'b', 'p', 'v', 'o', '-', 'a', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', 'f', '-', '-', 'l', 'n', 'y', 'x', 'h', 'b', 'j', 'e', 'c', '-', 'k'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'h', 'l', '-', 'm', 'k', '-', 'w', 'b', 'r', 'g', '-', 't', 'y', '-', 'c'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'s', 'r', 'y', 'l', 't', '-', 'n', 'o', 'a', 'j', 'g', 'h', '-', '-', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', 'c', 'z', 'p', 'o', 'f', 'g', 'c', 'w', 'q', 'b', 'l', 'd', 'p', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'j', 'q', 'd', '-', 'h', 'p', 'y', 'p', 'y', 'r', 'a', '-', 'z', 'l', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'t', '-', 'h', 'w', 'x', 'w', '-', 'v', 'g', 'n', '-', 's', 'r', 'j', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'t', 'e', 'w', '-', 'm', 'r', 't', 'a', 'b', 'b', 'c', 'u', 'f', 'u', 'u'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 'e', '-', 's', 'o', 'd', '-', 'c', 'h', 'z', 'l', 'm', 'w', 'h', 'c'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">10</span>, <span class="stevilo">1</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">8</span>, <span class="stevilo">1</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">0</span>, <span class="stevilo">1</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">12</span>, <span class="stevilo">1</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">14</span>, <span class="stevilo">1</span>);<br/>
+<tab>}<br/>
+<br/>
+<tab><span class="rwordv">private</span> <span class="rwordv">static</span> <span class="rwordv">void</span> izpisi(<span class="rwordv">char</span>[][] krizanka, <span class="rwordv">int</span> stolpec, <span class="rwordv">int</span> k) {<br/>
+<tab><tab><span class="rwordv">char</span>[] beseda = Druga.ktaBeseda(krizanka, stolpec, k);<br/>
+<tab><tab><span class="rwordb">if</span> (beseda == null) {<br/>
+<tab><tab><tab>System.out.println(<span class="niz">"null"</span>);<br/>
+<tab><tab>} <span class="rwordb">else</span> {<br/>
+<tab><tab><tab>System.out.println(Arrays.toString(beseda));<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [a,&nbsp;n,&nbsp;x,&nbsp;c,&nbsp;e,&nbsp;y,&nbsp;w,&nbsp;g,&nbsp;k,&nbsp;u,&nbsp;n,&nbsp;n,&nbsp;z,&nbsp;o,&nbsp;n]<br/>[x,&nbsp;h,&nbsp;m,&nbsp;b,&nbsp;e,&nbsp;c,&nbsp;j,&nbsp;m,&nbsp;t,&nbsp;l,&nbsp;n,&nbsp;m,&nbsp;z,&nbsp;v,&nbsp;m,&nbsp;e,&nbsp;i]<br/>[w,&nbsp;h,&nbsp;v,&nbsp;r,&nbsp;q,&nbsp;q,&nbsp;q,&nbsp;m,&nbsp;s,&nbsp;u,&nbsp;i,&nbsp;e]<br/>[d]<br/>[q,&nbsp;s,&nbsp;j,&nbsp;f,&nbsp;h,&nbsp;e,&nbsp;i,&nbsp;m,&nbsp;g,&nbsp;h,&nbsp;n,&nbsp;e,&nbsp;i]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase8"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 8</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.Arrays;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test08 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka = {<br/>
+<tab><tab><tab>{<span class="niz">'f', 'h', 'a', '-', 'b'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 'i', 'p', 's', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', '-', 't', '-', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'u', 'j', '-', 'c', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'l', 'z', '-', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'l', '-', 'v', 'w', 'k'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', 'p', '-', 'y', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'c', 's', 'r', '-', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', '-', 'k', '-', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'e', 'u', 'j', 'g'</span>},<br/>
+<tab><tab>};<br/>
+<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">0</span>, <span class="stevilo">1</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">0</span>, <span class="stevilo">2</span>);<br/>
+<br/>
+<tab><tab>System.out.println(<span class="niz">"----------"</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">1</span>, <span class="stevilo">1</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">1</span>, <span class="stevilo">2</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">1</span>, <span class="stevilo">3</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">1</span>, <span class="stevilo">4</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">1</span>, <span class="stevilo">5</span>);<br/>
+<br/>
+<tab><tab>System.out.println(<span class="niz">"----------"</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">2</span>, <span class="stevilo">1</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">2</span>, <span class="stevilo">2</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">2</span>, <span class="stevilo">3</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">2</span>, <span class="stevilo">4</span>);<br/>
+<br/>
+<tab><tab>System.out.println(<span class="niz">"----------"</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">3</span>, <span class="stevilo">1</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">3</span>, <span class="stevilo">2</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">3</span>, <span class="stevilo">3</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">3</span>, <span class="stevilo">4</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">3</span>, <span class="stevilo">5</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">3</span>, <span class="stevilo">6</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">3</span>, <span class="stevilo">7</span>);<br/>
+<br/>
+<tab><tab>System.out.println(<span class="niz">"----------"</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">4</span>, <span class="stevilo">1</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">4</span>, <span class="stevilo">2</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">4</span>, <span class="stevilo">3</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">4</span>, <span class="stevilo">4</span>);<br/>
+<tab>}<br/>
+<br/>
+<tab><span class="rwordv">private</span> <span class="rwordv">static</span> <span class="rwordv">void</span> izpisi(<span class="rwordv">char</span>[][] krizanka, <span class="rwordv">int</span> stolpec, <span class="rwordv">int</span> k) {<br/>
+<tab><tab><span class="rwordv">char</span>[] beseda = Druga.ktaBeseda(krizanka, stolpec, k);<br/>
+<tab><tab><span class="rwordb">if</span> (beseda == null) {<br/>
+<tab><tab><tab>System.out.println(<span class="niz">"null"</span>);<br/>
+<tab><tab>} <span class="rwordb">else</span> {<br/>
+<tab><tab><tab>System.out.println(Arrays.toString(beseda));<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [f,&nbsp;a,&nbsp;y,&nbsp;u,&nbsp;k,&nbsp;l,&nbsp;g,&nbsp;c,&nbsp;e,&nbsp;y]<br/>null<br/>----------<br/>[h,&nbsp;i]<br/>[j,&nbsp;l]<br/>[p,&nbsp;s]<br/>[e]<br/>null<br/>----------<br/>[a,&nbsp;p,&nbsp;t]<br/>[z,&nbsp;v]<br/>[r,&nbsp;k,&nbsp;u]<br/>null<br/>----------<br/>[]<br/>[s]<br/>[c]<br/>[w,&nbsp;y]<br/>[]<br/>[j]<br/>null<br/>----------<br/>[b,&nbsp;o,&nbsp;l]<br/>[]<br/>[k,&nbsp;a,&nbsp;e,&nbsp;r,&nbsp;g]<br/>null<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase9"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 9</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.Arrays;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test09 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka = {<br/>
+<tab><tab><tab>{<span class="niz">'-', 'x', 'k', 'h', 'b', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', 'g', '-', 'b', 'z', 'k'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', '-', 'p', 'i', 'h', 'i'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', '-', '-', '-', 'o', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'u', 'h', 'p', '-', 'y'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'u', '-', '-', '-', 'l', 'n'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', '-', 'c', 'p', 'x', 'h'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', '-', 'w', 'k', 'v', 'd'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'b', 'u', 'k', 'w', 'n', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'h', '-', 'x', 'h', 'u', 'j'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 'q', '-', 'o', 'n', 'b'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 'e', 'j', 'm', '-', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'p', 'g', 'z', '-', 'm', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'h', '-', 'z', 'x', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', '-', 't', 'u', '-', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'d', '-', 'v', 'b', 'e', 'g'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', '-', 'c', 'r', '-', 'h'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 's', '-', '-', 'd', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'j', 'a', 'v', 'm', 's', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'v', '-', '-', 's', 'p', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', 'm', 'u', 'q', 'a', 'y'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'z', 'd', 'g', '-', 'w', 'v'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', '-', 'q', 'a', 'b', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 'm', '-', 'c', 'u', 'g'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'l', 'q', 's', 'x', '-', 't'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'b', '-', '-', 'x', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'u', 'u', 'e', 'b', 'b', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'c', 'p', 'g', 'f', '-', 'i'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'w', 'f', 'y', 'w', 'u', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', '-', '-', 'i', 'k', 'e'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', 'b', '-', '-', '-', 'n'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'i', 'b', 'd', '-', '-', 'v'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', 'y', 'y', 'i', '-', 'b'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'i', 'x', 'l', 'i', 's', 'v'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">2</span>, <span class="stevilo">13</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">3</span>, <span class="stevilo">4</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">0</span>, <span class="stevilo">3</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">4</span>, <span class="stevilo">10</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">5</span>, <span class="stevilo">6</span>);<br/>
+<tab>}<br/>
+<br/>
+<tab><span class="rwordv">private</span> <span class="rwordv">static</span> <span class="rwordv">void</span> izpisi(<span class="rwordv">char</span>[][] krizanka, <span class="rwordv">int</span> stolpec, <span class="rwordv">int</span> k) {<br/>
+<tab><tab><span class="rwordv">char</span>[] beseda = Druga.ktaBeseda(krizanka, stolpec, k);<br/>
+<tab><tab><span class="rwordb">if</span> (beseda == null) {<br/>
+<tab><tab><tab>System.out.println(<span class="niz">"null"</span>);<br/>
+<tab><tab>} <span class="rwordb">else</span> {<br/>
+<tab><tab><tab>System.out.println(Arrays.toString(beseda));<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            null<br/>[z,&nbsp;u,&nbsp;b,&nbsp;r]<br/>[o,&nbsp;u,&nbsp;a]<br/>[s]<br/>[r,&nbsp;g,&nbsp;h]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+        <a name="testcase10"></a>
+        <div style="border: 1px solid #63B563">
+            <table class="tableOK tableCommon" style="width: 100%; border: 3px solid #9F9;">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="background-color: #9F9; color: black;">Testni primer 10</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 200px;">Vhod</td>
+                        <td class="texttt">
+                            <br/>
+<span class="rwordb">import</span> java.util.Arrays;<br/>
+<br/>
+<span class="rwordv">public</span> <span class="rwordv">class</span> Test10 {<br/>
+<br/>
+<tab><span class="rwordv">public</span> <span class="rwordv">static</span> <span class="rwordv">void</span> main(String[] args) {<br/>
+<tab><tab><span class="rwordv">char</span>[][] krizanka = {<br/>
+<tab><tab><tab>{<span class="niz">'y', 'r', 's', 'j', 'j', 'w', 'q', '-', 'x', 'r', '-', 'k', 'n', '-', 'i', '-', 'h', '-', '-', 'k'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'d', 'b', 'v', 't', 'j', 'n', 'e', 's', 'c', 'o', 'p', 'o', 'c', 'y', 'b', '-', 'p', 'e', 'r', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'o', 'x', 'k', 'k', 'r', 'g', 's', 'i', 'y', 'm', 'i', 'v', 'k', '-', 'i', 's', '-', 'z', 'k', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'b', 'l', 'c', '-', 'r', 'c', 'x', 's', 'k', 'k', '-', 'e', 'f', 'p', '-', 'o', 'j', '-', '-', 'h'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'r', 'l', 'y', '-', 'e', 'e', 'y', 'k', 'o', 'd', 'k', 'm', 'l', 'j', 'k', 'l', '-', 'g', 'y', 'q'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 'r', 'f', 'h', 'y', 'c', 'h', 'm', 'r', 'f', 'y', '-', 't', 'k', 'h', 'b', 'c', 'k', 't', 'b'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'e', 'c', '-', 'l', 't', 'm', 'e', '-', 't', 'y', 'w', 'u', 'i', 'e', 'w', '-', '-', 'c', 'm', 'x'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'g', '-', 'o', '-', 'f', 'n', '-', 'a', 'm', 'j', 'k', 'e', 'z', 'j', '-', 'o', 'x', 'n', 'w', 'w'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'j', 'j', 'j', 'a', 'x', 'h', 'f', 'g', 'i', 'a', 'w', 'c', 't', 'w', 'r', '-', 'h', 'w', 'c', 'b'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'h', '-', 'z', 'x', 'z', 'w', 'y', 'f', 'o', 'j', 'a', 'u', 'g', 'j', 'p', '-', '-', '-', 'c', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'r', 'i', 'l', '-', 'n', 't', 'g', 'u', 'i', 'g', '-', 'e', 'h', 'a', 'h', '-', 'a', 't', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'f', 't', 'z', 'g', 'd', 'y', 'p', 'x', 'u', 'j', 's', 't', 'x', 'u', '-', 't', 'e', 'r', 'd', 'v'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'l', 'v', 'm', 'q', 'r', 'q', 'a', '-', 'z', '-', '-', '-', 'i', 'h', 'c', 'h', 'k', '-', 'l', 'x'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'m', 'c', 'w', 'm', 'v', 'j', 'b', 'f', 'l', '-', 'w', 'c', 'c', 'f', 'k', 'v', 'k', 'h', '-', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 'h', '-', '-', '-', 't', 'a', 'o', 'l', 'b', 'k', 'd', 'r', 'f', 'p', 'x', 'q', 'n', 'a', 'w'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'k', 'o', 'i', 'a', 'c', 'a', '-', 'k', 't', 'x', '-', 't', 'q', 'p', 'd', 'l', '-', 's', 'y', 'a'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'l', 't', 'p', 'u', 'e', 'o', '-', '-', 'e', 'j', '-', 'c', 's', 'j', 'q', 'x', 'p', 'm', 'p', 'n'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'z', 'a', 'f', 'r', 'e', '-', 'b', '-', 's', 'u', 'm', 'j', 'k', 'i', 'j', '-', 'r', '-', '-', 'l'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'y', 'k', 'g', 'v', 'm', '-', 'h', 't', '-', 's', '-', 'n', 's', 's', '-', 'j', 'j', 'l', 'u', 'j'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'q', 'b', 'u', 'e', 'y', 'u', '-', 'u', 'm', 'p', 'l', 'm', 'e', '-', '-', 't', 'k', 'q', 't', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'c', 'd', 'k', 'v', 'n', 'q', 'q', '-', 't', 'm', '-', '-', 'j', 'v', 's', 'x', 'q', 'e', 'x', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'p', 'x', 'z', 'x', '-', 'b', 'x', '-', 'p', 'm', 'z', 'v', '-', 'g', '-', 'q', 'p', 't', 'i', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 'y', 'w', 's', 'p', 'w', 'n', 'y', 'h', 'q', 'c', '-', 'r', 'c', 'j', 'k', 'd', 'y', 's', 'q'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 'g', 'x', 't', 'f', '-', 'u', 'n', 'y', 'f', 'l', 'p', 'u', 'b', 't', 'v', 't', 'j', 'c', 'j'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'z', 's', 'e', 'p', 'g', 'r', '-', 'u', 'l', 'e', 'v', '-', 'v', 'u', 'i', 'l', 's', 'p', 'x', 'r'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'t', '-', '-', 'm', 'b', 'j', 'v', 'f', 'i', 'w', 'k', 'y', 'f', '-', 'g', 't', 'y', 'g', 'b', 'h'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'t', 'n', 'q', '-', 'j', 'c', 'v', 'h', 'h', '-', 'w', 'q', 's', 'd', 'l', 'y', 'a', 'm', 'w', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'a', 'h', 'z', 'z', '-', '-', 'c', '-', 'u', 'n', 'v', '-', 'g', 'z', 'q', '-', 'p', 'w', 't', 'c'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'w', 's', 'y', 'x', 'i', 'n', 'd', '-', 'i', 'l', 'p', 'r', 'c', '-', 'y', 'i', 'm', '-', 'r', 'o'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'s', 'l', '-', 'e', '-', 'v', 'j', 'q', 'c', 'h', 'n', '-', '-', 'x', '-', 'q', 'q', 'o', 'q', 'h'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'d', '-', 'a', 'w', '-', '-', 'p', 'b', 'r', 'a', '-', 'a', '-', 'm', 'm', 'q', 'x', 'w', 'a', 'c'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'-', 'n', 'm', 'h', 'p', 'n', 'p', 'l', 'g', 'z', 'u', 'f', 'h', 'v', 'p', 'z', 'b', 'c', 'h', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'i', 'y', 'l', 'i', '-', 'r', 'j', 'c', 'y', 'u', 'q', 'c', 'l', 'f', 'q', 'v', 'r', 'j', 'o', '-'</span>},<br/>
+<tab><tab><tab>{<span class="niz">'w', 'g', 'q', 's', 'r', 'y', '-', 't', 'b', 'k', 't', 'z', 'i', 'r', 's', 'z', 'g', 'n', 'p', 'i'</span>},<br/>
+<tab><tab>};<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">0</span>, <span class="stevilo">3</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">10</span>, <span class="stevilo">7</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">8</span>, <span class="stevilo">3</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">7</span>, <span class="stevilo">4</span>);<br/>
+<tab><tab>izpisi(krizanka, <span class="stevilo">2</span>, <span class="stevilo">2</span>);<br/>
+<tab>}<br/>
+<br/>
+<tab><span class="rwordv">private</span> <span class="rwordv">static</span> <span class="rwordv">void</span> izpisi(<span class="rwordv">char</span>[][] krizanka, <span class="rwordv">int</span> stolpec, <span class="rwordv">int</span> k) {<br/>
+<tab><tab><span class="rwordv">char</span>[] beseda = Druga.ktaBeseda(krizanka, stolpec, k);<br/>
+<tab><tab><span class="rwordb">if</span> (beseda == null) {<br/>
+<tab><tab><tab>System.out.println(<span class="niz">"null"</span>);<br/>
+<tab><tab>} <span class="rwordb">else</span> {<br/>
+<tab><tab><tab>System.out.println(Arrays.toString(beseda));<br/>
+<tab><tab>}<br/>
+<tab>}<br/>
+}<br/>
+
+
+<br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Izhod programa</td>
+                        <td class="texttt">
+                            [k,&nbsp;l,&nbsp;z,&nbsp;y,&nbsp;q,&nbsp;c,&nbsp;p]<br/>[l]<br/>null<br/>[f,&nbsp;o,&nbsp;k]<br/>[o,&nbsp;j,&nbsp;z,&nbsp;i,&nbsp;z,&nbsp;m,&nbsp;w]<br/><br/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 15px"></div>
+<div style="font-size: 0.8em;">[ <a href="#top">&uparrow;</a> | <a href="#bottom">&downarrow;</a> | 
+<a href="#summary">Povzetek</a> | 
+<a href="#testcase1">Rezultati</a> ]</div><div style="height: 30px"></div>
+
+        <div style="height: 30px"></div>
+
+        <table id="grad1" class="tableLegend tableSummary"
+          <tbody>
+            <tr>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #9F9; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">ok</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #FFBF00; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">napaka</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #FF9; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">napaka med izvajanjem</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #C00000; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">se ne prevede</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #B9F; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">timeout (1000 ms)</td>
+                </tr>
+              </table>
+              </td>
+              <td style="color: black;">
+              <table class="tableLegend">
+                <tr>
+	              <td style="background-color: #D0E0F0; color: black; width: 10px; text-align: center; border: 1px solid black; padding: 2px;"></td>
+	              <td style="font-size: 0.7em; padding: 3px;">rezultat izrisa</td>
+                </tr>
+              </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <a name="bottom"></a>
+        </div>
+    </body>
+    <!-- java class tester version "1.5.8" -->
+    <!-- 19.1.2021 21:16.35 -->
+    <!-- MIHA-PC, 172.17.210.87 -->
+</html>
