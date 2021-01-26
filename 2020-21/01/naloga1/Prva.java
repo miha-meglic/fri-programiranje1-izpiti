@@ -14,41 +14,25 @@ public class Prva {
 
 		for (int i = 0; i < stStevil; i++) {
 			int stevilo = scn.nextInt();
-			int[] digits = getDigitArray(stevilo);
 
-			int lastDigit = 0;
-			boolean foundFirst = false;
-			boolean descending = true;
-			for (int digit : digits) {
-				if (digit == 0 && foundFirst == false)
-					continue;
-
-				if (foundFirst == false) {
-					lastDigit = digit;
-					foundFirst = true;
-				}
-
-				if (lastDigit < digit) {
-					descending = false;
-					break;
-				}
-
-				lastDigit = digit;
-			}
-
-			System.out.println(descending ? "DA" : "NE");
+			System.out.println(jePadajoce(stevilo) ? "DA" : "NE");
 		}
 	}
 
-	public static int[] getDigitArray(int n) {
-		int[] digits = new int[10];
-		int index = 0;
+	public static boolean jePadajoce(int n) {
+		int lastDigit = -1;
 
-		for (int div = (int) Math.pow(10, 9); div > 0; div /= 10) {
-			digits[index++] = n / div;
-			n = n % div;
+		while (n > 0) {
+			int digit = n % 10;
+
+			if (lastDigit > digit) {
+				return false;
+			}
+
+			lastDigit = digit;
+			n /= 10;
 		}
 
-		return digits;
+		return true;
 	}
 }

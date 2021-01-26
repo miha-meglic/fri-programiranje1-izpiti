@@ -8,7 +8,7 @@ import java.util.*;
 public class Cetrta {
 
 	// =========================================================================
-	public static class Barva implements Comparable {
+	public static class Barva implements Comparable<Barva> {
 		private int r;
 		private int g;
 		private int b;
@@ -20,10 +20,7 @@ public class Cetrta {
 		}
 
 		@Override
-		public int compareTo(Object o) {
-			if (!(o instanceof Barva))
-				throw new ClassCastException();
-
+		public int compareTo(Barva o) {
 			Barva druga = (Barva) o;
 
 			if (this.r == druga.r) {
@@ -160,6 +157,13 @@ public class Cetrta {
 	// =========================================================================
 	public static Collection<Lik> poTipuInBarvi(Collection<Lik> liki) {
 		List<Lik> seznam = new ArrayList<>(liki);
+
+		seznam.sort(new Comparator<Lik>() {
+			@Override
+			public int compare(Cetrta.Lik o1, Cetrta.Lik o2) {
+				return 0;
+			}
+		});
 
 		seznam.sort((Lik l1, Lik l2) -> {
 			if (l1.vrsta() == l2.vrsta()) {
