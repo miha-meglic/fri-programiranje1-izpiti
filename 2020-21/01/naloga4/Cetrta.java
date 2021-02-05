@@ -158,13 +158,6 @@ public class Cetrta {
 	public static Collection<Lik> poTipuInBarvi(Collection<Lik> liki) {
 		List<Lik> seznam = new ArrayList<>(liki);
 
-		seznam.sort(new Comparator<Lik>() {
-			@Override
-			public int compare(Cetrta.Lik o1, Cetrta.Lik o2) {
-				return 0;
-			}
-		});
-
 		seznam.sort((Lik l1, Lik l2) -> {
 			if (l1.vrsta() == l2.vrsta()) {
 				return l1.barva.compareTo(l2.barva);
