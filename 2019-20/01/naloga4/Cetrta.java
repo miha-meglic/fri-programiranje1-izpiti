@@ -7,8 +7,6 @@
 
 import java.util.*;
 
-import jdk.nashorn.api.tree.Tree;
-
 public class Cetrta {
 
 	public static void main(String[] args) {
